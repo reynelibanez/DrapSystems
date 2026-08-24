@@ -1,0 +1,47 @@
+---
+import MainLayout from '../layouts/main.astro';
+import { PublicBookingWrapper } from '../components/public/PublicBookingWrapper';
+import '../styles/global.css';
+
+// Importar overrides solo en producción
+if (import.meta.env.PROD) {
+  await import('../styles/production-overrides.css');
+}
+
+const pageClass = 'booking-app';
+
+// ID de negocio de prueba - reemplaza con un ID real de tu base de datos
+const testBusinessId = '6f9f6531-8703-42af-b3ab-ccb107e16ae7';
+---
+
+<MainLayout pageClass={pageClass}>
+  <div id="app-root" class="bg-background min-h-screen w-full">
+    <PublicBookingWrapper client:only="react" businessId={testBusinessId} />
+  </div>
+</MainLayout>
+
+<style is:global>
+  html.booking-app,
+  html.booking-app body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background-color: var(--background) !important;
+  }
+
+  html.booking-app.dark,
+  html.booking-app.dark body {
+    background-color: var(--background) !important;
+  }
+
+  #app-root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    width: 100%;
+    background-color: var(--background) !important;
+  }
+</style>
+
+

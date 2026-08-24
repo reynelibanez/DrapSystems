@@ -1,0 +1,61 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="claspGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#A8A8A8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="claspShine">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#C0C0C0;stop-opacity:0" />
+    </radialGradient>
+    <filter id="metallic">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Sombra -->
+  <ellipse cx="200" cy="340" rx="80" ry="15" fill="rgba(0,0,0,0.2)"/>
+  
+  <!-- Broche de langosta -->
+  <g filter="url(#metallic)">
+    <!-- Cuerpo principal del broche -->
+    <path d="M 150 200 Q 150 150 200 140 Q 250 150 250 200 Q 250 250 200 260 Q 150 250 150 200 Z" 
+          fill="url(#claspGradient)" stroke="#606060" stroke-width="3"/>
+    
+    <!-- Parte superior del broche -->
+    <ellipse cx="200" cy="140" rx="50" ry="15" fill="#D3D3D3" stroke="#606060" stroke-width="2"/>
+    
+    <!-- Gancho del broche -->
+    <path d="M 200 140 L 200 100 Q 200 80 220 80 Q 240 80 240 100 L 240 120" 
+          fill="none" stroke="url(#claspGradient)" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Punta del gancho -->
+    <circle cx="240" cy="120" r="6" fill="#A8A8A8" stroke="#606060" stroke-width="2"/>
+    
+    <!-- Mecanismo de apertura -->
+    <rect x="180" y="180" width="40" height="50" rx="5" fill="#B8B8B8" stroke="#606060" stroke-width="2"/>
+    
+    <!-- Detalles del mecanismo -->
+    <line x1="190" y1="190" x2="210" y2="190" stroke="#808080" stroke-width="2"/>
+    <line x1="190" y1="205" x2="210" y2="205" stroke="#808080" stroke-width="2"/>
+    <line x1="190" y1="220" x2="210" y2="220" stroke="#808080" stroke-width="2"/>
+    
+    <!-- Anilla de conexión -->
+    <circle cx="200" cy="260" r="20" fill="none" stroke="url(#claspGradient)" stroke-width="6"/>
+    <circle cx="200" cy="260" r="12" fill="none" stroke="#D3D3D3" stroke-width="3"/>
+    
+    <!-- Brillos metálicos -->
+    <ellipse cx="180" cy="170" rx="15" ry="8" fill="url(#claspShine)" opacity="0.7"/>
+    <ellipse cx="220" cy="190" rx="12" ry="6" fill="url(#claspShine)" opacity="0.5"/>
+    <path d="M 195 140 Q 200 135 205 140" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.6"/>
+  </g>
+</svg>

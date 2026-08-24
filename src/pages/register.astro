@@ -1,0 +1,41 @@
+
+
+---
+import MainLayout from '../layouts/main.astro';
+import { RegisterApp } from '../components/RegisterApp';
+import '../styles/global.css';
+
+// Importar overrides solo en producción
+if (import.meta.env.PROD) {
+  await import('../styles/production-overrides.css');
+}
+
+const pageClass = 'register-page';
+---
+
+<MainLayout pageClass={pageClass}>
+  <div class="min-h-screen w-full bg-gradient-to-br from-primary/10 via-background to-accent/10">
+    <RegisterApp client:only="react" />
+  </div>
+</MainLayout>
+
+<style is:global>
+  html.register-page,
+  html.register-page body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Asegurar que el contenedor principal no cause scroll horizontal */
+  html.register-page #app-root {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+</style>
+
+
+

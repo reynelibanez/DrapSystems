@@ -1,0 +1,15 @@
+# Headers para todas las páginas
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Headers específicos para reset-password
+/reset-password
+  X-Frame-Options: ALLOW-FROM https://www.drapsystems.com
+  Content-Security-Policy: frame-ancestors 'self' https://*.webflow.io https://*.webflow.com https://www.drapsystems.com
+
+/booking-suite/reset-password
+  X-Frame-Options: ALLOW-FROM https://www.drapsystems.com
+  Content-Security-Policy: frame-ancestors 'self' https://*.webflow.io https://*.webflow.com https://www.drapsystems.com

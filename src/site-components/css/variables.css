@@ -1,0 +1,592 @@
+:root {
+  --_colors---background-color--bg-primary: var(
+    --_colors---core-neutral-color--neutral-primary
+  );
+  --_typography---font--body-font: Inter, sans-serif;
+  --_colors---text-color--text-primary: var(
+    --_colors---core-neutral-color--neutral-inverse
+  );
+  --_typography---base-typography--base-font-size: 1rem;
+  --_typography---base-typography--base-line-height: 1.6rem;
+  --_typography---base-typography--base-letter-spacing: 0em;
+  --_typography---h1-heading--h1-margin-bottom: 0.3em;
+  --_typography---font--heading-font: Inter, sans-serif;
+  --_typography---h1-heading--h1-size: 5.65rem;
+  --_typography---h1-heading--h1-line-height: 1.04em;
+  --_typography---h1-heading--h1-weight: 400;
+  --_typography---h1-heading--h1-letter-spacing: -0.01em;
+  --_typography---h2-heading--h2-margin-bottom: 0.35em;
+  --_typography---h2-heading--h2-size: 2.83rem;
+  --_typography---h2-heading--h2-line-height: 1.04em;
+  --_typography---h2-heading--h2-weight: 400;
+  --_typography---h2-heading--h2-letter-spacing: -0.01em;
+  --_typography---h3-heading--h3-margin-bottom: 0.5em;
+  --_typography---h3-heading--h3-size: 2rem;
+  --_typography---h3-heading--h3-line-height: 1.04em;
+  --_typography---h3-heading--h3-weight: 400;
+  --_typography---h3-heading--h3-letter-spacing: -0.01em;
+  --_typography---h4-heading--h4-margin-bottom: 0.5em;
+  --_typography---h4-heading--h4-size: 1.41rem;
+  --_typography---h4-heading--h4-line-height: 1.3em;
+  --_typography---h4-heading--h4-weight: 400;
+  --_typography---h4-heading--h4-letter-spacing: -0.01em;
+  --_typography---h5-heading--h5-margin-bottom: 0.5em;
+  --_typography---h5-heading--h5-size: 1rem;
+  --_typography---h5-heading--h5-line-height: 1.3em;
+  --_typography---h5-heading--h5-weight: 400;
+  --_typography---h5-heading--h5-letter-spacing: 0em;
+  --_typography---h6-heading--h6-margin-bottom: 0.5em;
+  --_typography---h6-heading--h6-size: 0.71rem;
+  --_typography---h6-heading--h6-line-height: 1.3em;
+  --_typography---h6-heading--h6-weight: 400;
+  --_typography---h6-heading--h6-letter-spacing: 0.1em;
+  --_typography---base-typography--base-margin-bottom: 0.75em;
+  --_typography---text--text-size: 1rem;
+  --_typography---text--text-line-height: 1.6em;
+  --_typography---text--text-letter-spacing: 0em;
+  --_colors---core-accent-color--accent-primary: #5ac1ff;
+  --_colors---core-accent-color--accent-primary-hover: #97d8ff;
+  --_sizes---image--image-radius: var(--_sizes---card--card-radius);
+  --_sizes---spacing--1-25x: 1.25rem;
+  --_sizes---spacing--0-5x: 0.5rem;
+  --_sizes---spacing--1-5x: 1.5rem;
+  --_sizes---card--card-radius: 1rem;
+  --_sizes---gap--sm-gap: var(--_sizes---spacing--2x);
+  --_sizes---container--container-width: 1280px;
+  --_sizes---container--container-padding-horizontal: var(
+    --_sizes---spacing--1x
+  );
+  --_sizes---container--container-lg-width: 1440px;
+  --_sizes---container--container-sm-width: 1000px;
+  --_typography---eyebrow--eyebrow-font: var(--_typography---font--body-font);
+  --_colors---current-color--current-a60: color-mix(
+    in srgb,
+    currentColor 60%,
+    transparent
+  );
+  --_typography---eyebrow--eyebrow-size: 0.9rem;
+  --_typography---eyebrow--eyebrow-line-height: 1.3em;
+  --_typography---base-typography--base-font-weight: 400;
+  --_typography---eyebrow--eyebrow-letter-spacing: 0.01em;
+  --_typography---text-lg--lg-text-size: 1.13rem;
+  --_typography---text-lg--lg-text-line-height: 1.6em;
+  --_typography---text-lg--lg-text-letter-spacing: 0em;
+  --_typography---text-xl--xl-text-size: 1.5rem;
+  --_typography---text-xl--xl-text-line-height: 1.6em;
+  --_typography---text-xl--xl-text-letter-spacing: 0em;
+  --_typography---text-sm--sm-text-size: 0.88rem;
+  --_typography---text-sm--sm-text-line-height: 1.6em;
+  --_typography---text-sm--sm-text-letter-spacing: 0em;
+  --_sizes---button--button-padding-vertical: 1em;
+  --_sizes---button--button-padding-horizontal: 1.5em;
+  --_colors---button--button-primary-border: transparent;
+  --_sizes---button--button-radius: 0.75rem;
+  --_typography---button--button-font: var(--_typography---font--button-font);
+  --_colors---text-color--text-on-accent-primary: #00001f;
+  --_colors---button--button-primary-border-hover: transparent;
+  --_colors---button--button-primary-text: var(
+    --_colors---text-color--text-on-accent-primary
+  );
+  --_colors---button--button-secondary-border: transparent;
+  --_colors---button--button-secondary-border-hover: transparent;
+  --_colors---text-link--link-inverse-hover: var(
+    --_colors---text-color--text-accent-on-inverse-hover
+  );
+  --_colors---text-color--text-inverse-primary: var(
+    --_colors---core-neutral-color--neutral-primary
+  );
+  --_sizes---spacing--0-75x: 0.75rem;
+  --_colors---core-neutral-color--neutral-primary: #ffffff;
+  --_colors---background-color--bg-inverse: var(
+    --_colors---core-neutral-color--neutral-inverse
+  );
+  --_colors---core-color-tint--neutral-inverse-a70: rgba(0, 0, 31, 0.7);
+  --_sizes---spacing--1x: 1rem;
+  --_sizes---spacing--2x: 2rem;
+  --_sizes---gap--xs-gap: var(--_sizes---spacing--1x);
+  --_colors---border-color--border-secondary: var(
+    --_colors---core-color-tint--neutral-inverse-a20
+  );
+  --_sizes---card--card-padding: var(--_sizes---spacing--2x);
+  --_colors---background-color--bg-accent-primary: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_colors---background-color--bg-secondary: var(
+    --_colors---core-neutral-color--neutral-secondary
+  );
+  --_colors---background-color--bg-accent-tertiary: var(
+    --_colors---core-accent-color--accent-tertiary
+  );
+  --_colors---text-color--text-on-accent-tertiary: #00001f;
+  --_colors---core-accent-color--accent-secondary: transparent;
+  --_colors---text-color--text-on-accent-secondary: #00001f;
+  --_colors---text-link--link-primary: var(
+    --_colors---text-color--text-accent-on-primary
+  );
+  --_colors---text-color--text-inverse-secondary: var(
+    --_colors---core-color-tint--neutral-primary-a60
+  );
+  --_colors---core-color-tint--neutral-inverse-a10: rgba(0, 0, 31, 0.1);
+  --_colors---text-color--text-accent-on-primary: #5ac1ff;
+  --_sizes---spacing--3x: 3rem;
+  --_sizes---spacing--5x: 5rem;
+  --_colors---text-link--link-inverse: var(
+    --_colors---text-color--text-accent-on-inverse
+  );
+  --_sizes---spacing--4x: 4rem;
+  --_colors---background-color--bg-accent-secondary: var(
+    --_colors---core-accent-color--accent-secondary
+  );
+  --_colors---card--card-primary-border: var(
+    --_colors---border-color--border-secondary
+  );
+  --_colors---core-color-tint--neutral-inverse-a20: rgba(0, 0, 31, 0.2);
+  --_colors---card--card-primary-text: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---card--card-inverse-border: transparent;
+  --_colors---card--card-inverse-bg: var(
+    --_colors---background-color--bg-inverse
+  );
+  --_colors---card--card-inverse-text: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_colors---card--card-inverse-bg-hover: var(
+    --_colors---background-color--bg-inverse
+  );
+  --_colors---core-color-tint--neutral-primary-a20: rgba(255, 255, 255, 0.2);
+  --_sizes---gap--xxs-gap: var(--_sizes---spacing--0-5x);
+  --_colors---button--button-secondary-bg-hover: transparent;
+  --_colors---text-color--text-secondary: var(
+    --_colors---core-color-tint--neutral-inverse-a60
+  );
+  --_colors---nav-link--nav-link-inverse: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_sizes---radius--md-radius: 0.5rem;
+  --_interactions---ix--ix-nav-width: 0px;
+  --_colors---nav-link--nav-link-primary: var(
+    --_colors---text-color--text-primary
+  );
+  --_slider---spacing: 0rem;
+  --_apps---typography--heading-font: var(--_typography---font--heading-font);
+  --_apps---typography--body-font: var(--_typography---font--body-font);
+  --_apps---typography--button-font: var(--_typography---font--button-font);
+  --_apps---sizes--radius: var(--_sizes---radius--md-radius);
+  --_apps---colors--background: var(--_colors---background-color--bg-primary);
+  --_apps---colors--foreground: var(--_colors---text-color--text-primary);
+  --_apps---colors--card: var(--_colors---card--card-primary-bg);
+  --_apps---colors--card-foreground: var(--_colors---card--card-primary-text);
+  --_apps---colors--popover: var(--_colors---background-color--bg-primary);
+  --_apps---colors--popover-foreground: var(
+    --_colors---text-color--text-primary
+  );
+  --_apps---colors--primary: var(--_colors---core-accent-color--accent-primary);
+  --_apps---colors--primary-foreground: var(
+    --_colors---text-color--text-on-accent-primary
+  );
+  --_apps---colors--secondary: var(--_colors---background-color--bg-secondary);
+  --_apps---colors--secondary-foreground: var(
+    --_colors---text-color--text-secondary
+  );
+  --_apps---colors--muted: var(
+    --_colors---core-neutral-color--neutral-secondary
+  );
+  --_apps---colors--muted-foreground: var(
+    --_colors---text-color--text-secondary
+  );
+  --_apps---colors--accent: var(
+    --_colors---core-neutral-color--neutral-secondary
+  );
+  --_apps---colors--accent-foreground: var(
+    --_colors---text-color--text-secondary
+  );
+  --_apps---colors--destructive: #ff5c5c;
+  --_apps---colors--border: var(--_colors---border-color--border-primary);
+  --_apps---colors--input: var(--_colors---border-color--border-secondary);
+  --_apps---colors--ring: var(--_colors---border-color--border-accent);
+  --_apps---charts--chart-1: #8fd4ff;
+  --_apps---charts--chart-2: #74c9ff;
+  --_apps---charts--chart-3: var(--_colors---core-accent-color--accent-primary);
+  --_apps---charts--chart-4: #3f9be0;
+  --_apps---charts--chart-5: #2c7bbf;
+  --_apps---sidebar--sidebar: var(--_colors---background-color--bg-primary);
+  --_apps---sidebar--sidebar-foreground: var(
+    --_colors---text-color--text-primary
+  );
+  --_apps---sidebar--sidebar-primary: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_apps---sidebar--sidebar-primary-foreground: var(
+    --_colors---text-color--text-on-accent-primary
+  );
+  --_colors---core-accent-color--accent-secondary-hover: transparent;
+  --_colors---core-accent-color--accent-tertiary: transparent;
+  --_colors---core-accent-color--accent-tertiary-hover: transparent;
+  --_colors---core-neutral-color--neutral-secondary: #f6f7f9;
+  --_colors---core-neutral-color--neutral-inverse: #00001f;
+  --_colors---current-color--current: color-mix(
+    in srgb,
+    currentColor 100%,
+    transparent
+  );
+  --_colors---current-color--current-a80: color-mix(
+    in srgb,
+    currentColor 80%,
+    transparent
+  );
+  --_colors---current-color--current-a70: color-mix(
+    in srgb,
+    currentColor 70%,
+    transparent
+  );
+  --_colors---current-color--current-a50: color-mix(
+    in srgb,
+    currentColor 50%,
+    transparent
+  );
+  --_colors---current-color--current-a20: color-mix(
+    in srgb,
+    currentColor 20%,
+    transparent
+  );
+  --_colors---current-color--current-a10: color-mix(
+    in srgb,
+    currentColor 10%,
+    transparent
+  );
+  --_colors---current-color--current-a05: color-mix(
+    in srgb,
+    currentColor 5%,
+    transparent
+  );
+  --_colors---core-color-tint--accent-primary-a10: rgba(90, 193, 255, 0.1);
+  --_colors---core-color-tint--accent-primary-a20: rgba(90, 193, 255, 0.2);
+  --_colors---core-color-tint--accent-primary-a30: rgba(90, 193, 255, 0.3);
+  --_colors---core-color-tint--accent-primary-a40: rgba(90, 193, 255, 0.4);
+  --_colors---core-color-tint--accent-primary-a50: rgba(90, 193, 255, 0.5);
+  --_colors---core-color-tint--accent-primary-a60: rgba(90, 193, 255, 0.6);
+  --_colors---core-color-tint--accent-primary-a70: rgba(90, 193, 255, 0.7);
+  --_colors---core-color-tint--accent-primary-a80: rgba(90, 193, 255, 0.8);
+  --_colors---core-color-tint--accent-primary-a90: rgba(90, 193, 255, 0.9);
+  --_colors---core-color-tint--accent-secondary-a10: transparent;
+  --_colors---core-color-tint--accent-secondary-a20: transparent;
+  --_colors---core-color-tint--accent-secondary-a30: transparent;
+  --_colors---core-color-tint--accent-secondary-a40: transparent;
+  --_colors---core-color-tint--accent-secondary-a50: transparent;
+  --_colors---core-color-tint--accent-secondary-a60: transparent;
+  --_colors---core-color-tint--accent-secondary-a70: transparent;
+  --_colors---core-color-tint--accent-secondary-a80: transparent;
+  --_colors---core-color-tint--accent-secondary-a90: transparent;
+  --_colors---core-color-tint--accent-tertiary-a10: transparent;
+  --_colors---core-color-tint--accent-tertiary-a20: transparent;
+  --_colors---core-color-tint--accent-tertiary-a30: transparent;
+  --_colors---core-color-tint--accent-tertiary-a40: transparent;
+  --_colors---core-color-tint--accent-tertiary-a50: transparent;
+  --_colors---core-color-tint--accent-tertiary-a60: transparent;
+  --_colors---core-color-tint--accent-tertiary-a70: transparent;
+  --_colors---core-color-tint--accent-tertiary-a80: transparent;
+  --_colors---core-color-tint--accent-tertiary-a90: transparent;
+  --_colors---core-color-tint--neutral-primary-a10: rgba(255, 255, 255, 0.1);
+  --_colors---core-color-tint--neutral-primary-a30: rgba(255, 255, 255, 0.3);
+  --_colors---core-color-tint--neutral-primary-a40: rgba(255, 255, 255, 0.4);
+  --_colors---core-color-tint--neutral-primary-a50: rgba(255, 255, 255, 0.5);
+  --_colors---core-color-tint--neutral-primary-a60: rgba(255, 255, 255, 0.6);
+  --_colors---core-color-tint--neutral-primary-a70: rgba(255, 255, 255, 0.7);
+  --_colors---core-color-tint--neutral-primary-a80: rgba(255, 255, 255, 0.8);
+  --_colors---core-color-tint--neutral-primary-a90: rgba(255, 255, 255, 0.9);
+  --_colors---core-color-tint--neutral-inverse-a30: rgba(0, 0, 31, 0.3);
+  --_colors---core-color-tint--neutral-inverse-a40: rgba(0, 0, 31, 0.4);
+  --_colors---core-color-tint--neutral-inverse-a50: rgba(0, 0, 31, 0.5);
+  --_colors---core-color-tint--neutral-inverse-a60: rgba(0, 0, 31, 0.6);
+  --_colors---core-color-tint--neutral-inverse-a80: rgba(0, 0, 31, 0.8);
+  --_colors---core-color-tint--neutral-inverse-a90: rgba(0, 0, 31, 0.9);
+  --_colors---background-color--bg-overlay: var(
+    --_colors---core-neutral-color--neutral-inverse
+  );
+  --_colors---text-color--text-accent-on-primary-hover: rgba(90, 193, 255, 0.6);
+  --_colors---text-color--text-accent-on-inverse: #5ac1ff;
+  --_colors---text-color--text-accent-on-inverse-hover: rgba(90, 193, 255, 0.6);
+  --_colors---text-color--text-on-overlay: var(
+    --_colors---core-neutral-color--neutral-primary
+  );
+  --_colors---border-color--border-primary: var(
+    --_colors---core-color-tint--neutral-inverse-a10
+  );
+  --_colors---border-color--border-inverse-primary: var(
+    --_colors---core-color-tint--neutral-primary-a20
+  );
+  --_colors---border-color--border-inverse-secondary: var(
+    --_colors---core-color-tint--neutral-primary-a10
+  );
+  --_colors---border-color--border-accent: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_sizes---radius--sm-radius: 0.25rem;
+  --_sizes---radius--lg-radius: 0.75rem;
+  --_sizes---radius--xl-radius: 1rem;
+  --_sizes---radius--round: 100rem;
+  --_sizes---spacing--0-25x: 0.25rem;
+  --_sizes---spacing--1-75x: 1.75rem;
+  --_sizes---spacing--6x: 6rem;
+  --_sizes---spacing--7x: 7rem;
+  --_sizes---spacing--8x: 8rem;
+  --_sizes---gap--md-gap: var(--_sizes---spacing--3x);
+  --_sizes---gap--lg-gap: var(--_sizes---spacing--4x);
+  --_sizes---gap--xl-gap: var(--_sizes---spacing--5x);
+  --_sizes---gap--xxl-gap: var(--_sizes---spacing--6x);
+  --_typography---font--button-font: Inter, sans-serif;
+  --_typography---base-typography--base-font: var(
+    --_typography---font--body-font
+  );
+  --_typography---base-typography--base-font-weight-bold: 600;
+  --_apps---sidebar--sidebar-accent: var(
+    --_colors---core-neutral-color--neutral-secondary
+  );
+  --_apps---sidebar--sidebar-accent-foreground: var(
+    --_colors---text-color--text-secondary
+  );
+  --_apps---sidebar--sidebar-border: var(
+    --_colors---border-color--border-secondary
+  );
+  --_apps---sidebar--sidebar-ring: var(--_colors---border-color--border-accent);
+  --_apps---colors--background-dark: var(
+    --_colors---background-color--bg-inverse
+  );
+  --_apps---colors--foreground-dark: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_apps---colors--card-dark: var(--_colors---card--card-inverse-bg);
+  --_apps---colors--card-foreground-dark: var(
+    --_colors---card--card-inverse-text
+  );
+  --_apps---colors--popover-dark: var(--_colors---background-color--bg-inverse);
+  --_apps---colors--popover-foreground-dark: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_apps---colors--primary-dark: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_apps---colors--primary-foreground-dark: var(
+    --_colors---text-color--text-on-accent-primary
+  );
+  --_apps---colors--secondary-dark: var(
+    --_colors---background-color--bg-inverse
+  );
+  --_apps---colors--secondary-foreground-dark: var(
+    --_colors---text-color--text-inverse-secondary
+  );
+  --_apps---colors--muted-dark: var(
+    --_colors---core-color-tint--neutral-inverse-a80
+  );
+  --_apps---colors--muted-foreground-dark: var(
+    --_colors---text-color--text-inverse-secondary
+  );
+  --_apps---colors--accent-dark: var(
+    --_colors---core-color-tint--neutral-inverse-a80
+  );
+  --_apps---colors--accent-foreground-dark: var(
+    --_colors---text-color--text-inverse-secondary
+  );
+  --_apps---colors--destructive-dark: #ff5c5c;
+  --_apps---colors--border-dark: var(
+    --_colors---border-color--border-inverse-primary
+  );
+  --_apps---colors--input-dark: var(
+    --_colors---border-color--border-inverse-secondary
+  );
+  --_apps---colors--ring-dark: var(--_colors---border-color--border-accent);
+  --_apps---charts--chart-1-dark: oklch(77.7% 0.152 181.912);
+  --_apps---charts--chart-2-dark: oklch(70.4% 0.14 182.503);
+  --_apps---charts--chart-3-dark: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_apps---charts--chart-4-dark: oklch(51.1% 0.096 186.391);
+  --_apps---charts--chart-5-dark: oklch(43.7% 0.078 188.216);
+  --_apps---sidebar--sidebar-dark: var(
+    --_colors---background-color--bg-inverse
+  );
+  --_apps---sidebar--sidebar-foreground-dark: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_apps---sidebar--sidebar-primary-dark: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_apps---sidebar--sidebar-primary-foreground-dark: var(
+    --_colors---text-color--text-on-accent-primary
+  );
+  --_apps---sidebar--sidebar-accent-dark: var(
+    --_colors---core-neutral-color--neutral-inverse
+  );
+  --_apps---sidebar--sidebar-accent-foreground-dark: var(
+    --_colors---text-color--text-inverse-secondary
+  );
+  --_apps---sidebar--sidebar-border-dark: var(
+    --_colors---border-color--border-inverse-secondary
+  );
+  --_apps---sidebar--sidebar-ring-dark: var(
+    --_colors---border-color--border-accent
+  );
+  --_typography---h0-heading--h0-size: 7.99rem;
+  --_typography---h0-heading--h0-letter-spacing: -0.01em;
+  --_typography---h0-heading--h0-line-height: 1.04em;
+  --_typography---h0-heading--h0-weight: 400;
+  --_typography---h0-heading--h0-margin-bottom: 0.3em;
+  --_typography---text-xxl--xxl-text-size: 2rem;
+  --_typography---text-xxl--xxl-text-letter-spacing: 0em;
+  --_typography---text-xxl--xxl-text-line-height: 1.6em;
+  --_colors---blockquote--blockquote-bg: transparent;
+  --_colors---blockquote--blockquote-text: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---blockquote--blockquote-border: var(
+    --_colors---text-color--text-primary
+  );
+  --_typography---blockquote--blockquote-radius: 0px;
+  --_typography---blockquote--blockquote-border-width: 3px;
+  --_typography---blockquote--blockquote-font: var(
+    --_typography---font--body-font
+  );
+  --_typography---blockquote--blockquote-size: clamp(
+    1.125rem,
+    1.5vw + 0.25rem,
+    1.5rem
+  );
+  --_typography---blockquote--blockquote-letter-spacing: 0.01em;
+  --_typography---blockquote--blockquote-line-height: 1.5em;
+  --_typography---blockquote--blockquote-padding-vertical: var(
+    --_sizes---spacing--0-75x
+  );
+  --_typography---blockquote--blockquote-padding-horizontal: var(
+    --_sizes---spacing--1-25x
+  );
+  --_sizes---button--button-size: var(
+    --_typography---base-typography--base-font-size
+  );
+  --_colors---button--button-primary-bg: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_colors---button--button-primary-bg-hover: var(
+    --_colors---core-accent-color--accent-primary-hover
+  );
+  --_colors---button--button-secondary-bg: transparent;
+  --_colors---button--button-secondary-text: var(
+    --_colors---text-color--text-primary
+  );
+  --_sizes---input--input-radius: 0.75rem;
+  --_sizes---input--input-padding-vertical: var(--_sizes---spacing--1x);
+  --_sizes---input--input-padding-horizontal: var(--_sizes---spacing--1x);
+  --_colors---input--input-primary-bg: transparent;
+  --_colors---input--input-primary-bg-hover: transparent;
+  --_colors---input--input-primary-text: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---input--input-primary-text-placeholder: var(
+    --_colors---core-color-tint--neutral-inverse-a20
+  );
+  --_colors---input--input-primary-border: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---input--input-primary-border-hover: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---input--input-inverse-bg: transparent;
+  --_colors---input--input-inverse-bg-hover: transparent;
+  --_colors---input--input-inverse-text: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_colors---input--input-inverse-text-placeholder: var(
+    --_colors---core-color-tint--neutral-primary-a50
+  );
+  --_colors---input--input-inverse-border: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_colors---input--input-inverse-border-hover: var(
+    --_colors---text-color--text-inverse-primary
+  );
+  --_colors---input--input-control: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_colors---input--input-control-border: var(
+    --_colors---core-accent-color--accent-primary
+  );
+  --_colors---card--card-primary-bg: var(
+    --_colors---background-color--bg-primary
+  );
+  --_sizes---card--card-padding-sm: var(--_sizes---spacing--1-5x);
+  --_colors---card--card-primary-bg-hover: var(
+    --_colors---background-color--bg-primary
+  );
+  --_colors---card--card-secondary-bg: var(
+    --_colors---background-color--bg-secondary
+  );
+  --_colors---card--card-secondary-bg-hover: var(
+    --_colors---background-color--bg-secondary
+  );
+  --_colors---card--card-secondary-text: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---card--card-secondary-border: var(
+    --_colors---border-color--border-secondary
+  );
+  --_colors---card--card-accent-primary-bg: var(
+    --_colors---background-color--bg-accent-primary
+  );
+  --_colors---card--card-accent-primary-bg-hover: var(
+    --_colors---background-color--bg-accent-primary
+  );
+  --_colors---card--card-accent-primary-text: white;
+  --_colors---card--card-accent-primary-border: transparent;
+  --_colors---card--card-accent-secondary-bg: var(
+    --_colors---background-color--bg-accent-secondary
+  );
+  --_colors---card--card-accent-secondary-bg-hover: var(
+    --_colors---background-color--bg-accent-secondary
+  );
+  --_colors---card--card-accent-secondary-text: white;
+  --_colors---card--card-accent-secondary-border: transparent;
+  --_colors---card--card-accent-tertiary-bg: var(
+    --_colors---background-color--bg-accent-tertiary
+  );
+  --_colors---card--card-accent-tertiary-bg-hover: var(
+    --_colors---background-color--bg-accent-tertiary
+  );
+  --_colors---card--card-accent-tertiary-text: transparent;
+  --_colors---card--card-accent-tertiary-border: transparent;
+  --_sizes---nav--nav-height: 4rem;
+  --_sizes---section--section-padding-vertical: var(--_sizes---spacing--8x);
+  --_sizes---tag--tag-radius: 0.75rem;
+  --_typography---tag--tag-size: 0.75rem;
+  --_sizes---tag--tag-padding-vertical: var(--_sizes---spacing--0-25x);
+  --_typography---size: 0px;
+  --_sizes---tag--tag-padding-horizontal: var(--_sizes---spacing--0-5x);
+  --_sizes---slider--spacing-sm: var(--_sizes---spacing--1x);
+  --_sizes---slider--5-slides: 5;
+  --_sizes---slider--4-slides: 4;
+  --_sizes---slider--3-slides: 3;
+  --_sizes---slider--2-slides: 2;
+  --_sizes---slider--1-5-slides: 1.5;
+  --_sizes---slider--navigation: var(--_sizes---spacing--0-75x);
+  --_colors---text-link--link-primary-hover: var(
+    --_colors---text-color--text-accent-on-primary-hover
+  );
+  --_colors---text-link--link-secondary: var(
+    --_colors---text-color--text-primary
+  );
+  --_colors---text-link--link-secondary-hover: var(
+    --_colors---core-color-tint--neutral-inverse-a60
+  );
+  --_interactions---ix--ix-hero-intro-slide-up-100vh: 0px;
+  --_interactions---ix--ix-hero-intro-clipping-mask-1: 0px;
+  --_interactions---ix--ix-hero-intro-clipping-mask-2: 0px;
+  --_interactions---ix--ix-hero-intro-clipping-mask-3: 0px;
+  --_interactions---ix--ix-card-spacing: 2rem;
+  --_interactions---ix--ix-follow-cursor: 0%;
+  --_interactions---ix--ix-card-change-width: 50%;
+  --_sizes---width--xxs: 12rem;
+  --_sizes---width--xs: 25rem;
+  --_sizes---width--sm: 35rem;
+  --_sizes---width--md: 40rem;
+  --_sizes---width--lg: 50rem;
+  --_sizes---width--xl: 60rem;
+}

@@ -1,0 +1,70 @@
+---
+import MainLayout from '../../layouts/main.astro';
+import '../../styles/global.css';
+
+// Importar overrides solo en producción
+if (import.meta.env.PROD) {
+  await import('../../styles/production-overrides.css');
+}
+
+const pageClass = 'subscription-cancelled';
+---
+
+<MainLayout pageClass={pageClass}>
+  <div class="min-h-screen flex items-center justify-center bg-background p-4">
+    <div class="max-w-md w-full bg-card rounded-lg shadow-lg p-8 text-center">
+      <div class="mb-6">
+        <svg
+          class="w-16 h-16 mx-auto text-yellow-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+      </div>
+      
+      <h1 class="text-3xl font-bold text-foreground mb-4">
+        Suscripción Cancelada
+      </h1>
+      
+      <p class="text-muted-foreground mb-8">
+        Has cancelado el proceso de suscripción. No se ha realizado ningún cargo a tu cuenta.
+      </p>
+      
+      <div class="space-y-3">
+        <a
+          href="/"
+          class="block w-full bg-primary text-primary-foreground py-3 px-4 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+        >
+          Volver al Dashboard
+        </a>
+        
+        <button
+          onclick="window.close()"
+          class="block w-full bg-secondary text-secondary-foreground py-3 px-4 rounded-lg font-medium hover:bg-secondary/90 transition-colors"
+        >
+          Cerrar esta ventana
+        </button>
+      </div>
+      
+      <p class="text-sm text-muted-foreground mt-6">
+        Si tienes alguna pregunta, no dudes en contactarnos.
+      </p>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  // Permitir cerrar la ventana si fue abierta por JavaScript
+  const closeButton = document.querySelector('button[onclick="window.close()"]');
+  if (closeButton && !window.opener) {
+    closeButton.style.display = 'none';
+  }
+</script>
+

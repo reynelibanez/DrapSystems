@@ -1,0 +1,267 @@
+---
+// Página de prueba para Service Worker
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Service Worker</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.6;
+    }
+    .status {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+    }
+    .success { background: #d4edda; border-color: #28a745; }
+    .error { background: #f8d7da; border-color: #dc3545; }
+    .warning { background: #fff3cd; border-color: #ffc107; }
+    button {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      border: none;
+      border-radius: 4px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover { background: #0056b3; }
+    #logs {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+    .log-entry {
+      margin: 0.25rem 0;
+      padding: 0.25rem;
+    }
+    .log-error { color: #dc3545; }
+    .log-success { color: #28a745; }
+    .log-info { color: #007bff; }
+  </style>
+</head>
+<body>
+  <h1>🔧 Test Service Worker</h1>
+  
+  <div id="status" class="status warning">
+    <strong>Estado:</strong> Verificando...
+  </div>
+
+  <div>
+    <h2>Acciones</h2>
+    <button onclick="registerSW()">Registrar Service Worker</button>
+    <button onclick="unregisterSW()">Desregistrar Service Worker</button>
+    <button onclick="checkStatus()">Verificar Estado</button>
+    <button onclick="clearLogs()">Limpiar Logs</button>
+    <button onclick="testFetch()">Test Fetch</button>
+  </div>
+
+  <div>
+    <h2>Logs</h2>
+    <div id="logs"></div>
+  </div>
+
+  <script>
+    const logsDiv = document.getElementById('logs');
+    const statusDiv = document.getElementById('status');
+
+    function log(message, type = 'info') {
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      entry.textContent = `[${time}] ${message}`;
+      logsDiv.appendChild(entry);
+      logsDiv.scrollTop = logsDiv.scrollHeight;
+      console.log(`[Test] ${message}`);
+    }
+
+    function clearLogs() {
+      logsDiv.innerHTML = '';
+      log('Logs limpiados', 'info');
+    }
+
+    function updateStatus(message, type) {
+      statusDiv.className = `status ${type}`;
+      statusDiv.innerHTML = `<strong>Estado:</strong> ${message}`;
+    }
+
+    async function checkStatus() {
+      log('=== Verificando estado ===', 'info');
+      
+      // 1. Verificar soporte
+      if (!('serviceWorker' in navigator)) {
+        log('❌ Service Worker NO soportado', 'error');
+        updateStatus('Service Worker no soportado en este navegador', 'error');
+        return;
+      }
+      log('✅ Service Worker soportado', 'success');
+
+      // 2. Verificar registro
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (registration) {
+          log(`✅ Service Worker registrado`, 'success');
+          log(`   Scope: ${registration.scope}`, 'info');
+          log(`   Active: ${registration.active ? 'Sí' : 'No'}`, 'info');
+          log(`   Installing: ${registration.installing ? 'Sí' : 'No'}`, 'info');
+          log(`   Waiting: ${registration.waiting ? 'Sí' : 'No'}`, 'info');
+          
+          if (registration.active) {
+            log(`   Estado: ${registration.active.state}`, 'info');
+          }
+          
+          updateStatus('Service Worker registrado y funcionando', 'success');
+        } else {
+          log('⚠️ Service Worker NO registrado', 'warning');
+          updateStatus('Service Worker no registrado', 'warning');
+        }
+      } catch (error) {
+        log(`❌ Error al verificar registro: ${error.message}`, 'error');
+        updateStatus('Error al verificar Service Worker', 'error');
+      }
+
+      // 3. Verificar controlador
+      if (navigator.serviceWorker.controller) {
+        log('✅ Página controlada por Service Worker', 'success');
+        log(`   Script URL: ${navigator.serviceWorker.controller.scriptURL}`, 'info');
+      } else {
+        log('⚠️ Página NO controlada por Service Worker', 'warning');
+      }
+
+      // 4. Verificar manifest
+      try {
+        const response = await fetch('/manifest.json');
+        if (response.ok) {
+          const manifest = await response.json();
+          log('✅ Manifest cargado correctamente', 'success');
+          log(`   Nombre: ${manifest.name}`, 'info');
+        } else {
+          log(`❌ Error al cargar manifest: ${response.status}`, 'error');
+        }
+      } catch (error) {
+        log(`❌ Error al cargar manifest: ${error.message}`, 'error');
+      }
+
+      log('=== Verificación completada ===', 'info');
+    }
+
+    async function registerSW() {
+      log('=== Intentando registrar Service Worker ===', 'info');
+      
+      if (!('serviceWorker' in navigator)) {
+        log('❌ Service Worker no soportado', 'error');
+        updateStatus('Service Worker no soportado', 'error');
+        return;
+      }
+
+      try {
+        log('Registrando /sw.js con scope: /', 'info');
+        const registration = await navigator.serviceWorker.register('/sw.js', {
+          scope: '/',
+          type: 'classic'
+        });
+        
+        log('✅ Registro exitoso!', 'success');
+        log(`   Scope: ${registration.scope}`, 'info');
+        
+        // Escuchar eventos
+        registration.addEventListener('updatefound', () => {
+          log('🔄 Actualización encontrada', 'info');
+          const newWorker = registration.installing;
+          
+          newWorker.addEventListener('statechange', () => {
+            log(`   Estado cambió a: ${newWorker.state}`, 'info');
+          });
+        });
+
+        if (registration.installing) {
+          log('   Estado: Instalando...', 'info');
+        } else if (registration.waiting) {
+          log('   Estado: Esperando...', 'info');
+        } else if (registration.active) {
+          log('   Estado: Activo', 'success');
+        }
+
+        updateStatus('Service Worker registrado exitosamente', 'success');
+        
+        // Verificar estado después de 2 segundos
+        setTimeout(checkStatus, 2000);
+        
+      } catch (error) {
+        log(`❌ Error al registrar: ${error.name}`, 'error');
+        log(`   Mensaje: ${error.message}`, 'error');
+        log(`   Stack: ${error.stack}`, 'error');
+        updateStatus(`Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function unregisterSW() {
+      log('=== Desregistrando Service Worker ===', 'info');
+      
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (registration) {
+          await registration.unregister();
+          log('✅ Service Worker desregistrado', 'success');
+          updateStatus('Service Worker desregistrado', 'warning');
+        } else {
+          log('⚠️ No hay Service Worker registrado', 'warning');
+        }
+      } catch (error) {
+        log(`❌ Error al desregistrar: ${error.message}`, 'error');
+      }
+    }
+
+    async function testFetch() {
+      log('=== Test de Fetch ===', 'info');
+      
+      try {
+        log('Intentando cargar /sw.js...', 'info');
+        const response = await fetch('/sw.js');
+        
+        if (response.ok) {
+          const text = await response.text();
+          log(`✅ sw.js cargado (${text.length} bytes)`, 'success');
+          log(`   Primera línea: ${text.split('\n')[0]}`, 'info');
+        } else {
+          log(`❌ Error HTTP: ${response.status}`, 'error');
+        }
+      } catch (error) {
+        log(`❌ Error al cargar sw.js: ${error.message}`, 'error');
+      }
+    }
+
+    // Verificar estado al cargar
+    window.addEventListener('load', () => {
+      log('Página cargada', 'info');
+      checkStatus();
+    });
+
+    // Escuchar eventos del Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        log('🔄 Controlador cambió', 'info');
+      });
+
+      navigator.serviceWorker.ready.then(registration => {
+        log('✅ Service Worker listo', 'success');
+      });
+    }
+  </script>
+</body>
+</html>

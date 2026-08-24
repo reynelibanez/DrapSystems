@@ -1,0 +1,163 @@
+/**
+ * PRODUCTION OVERRIDES
+ * Este archivo sobrescribe estilos de Webflow que pueden causar problemas en producción
+ * Específicamente para el problema de tabs sticky y diálogos en móvil
+ */
+
+/* FORZAR SCROLL NORMAL EN TABS - Solo el contenedor de tabs, no todo el body */
+.tabs-scroll-normal {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* TabsList específicamente */
+[role="tablist"] {
+  position: static !important;
+  top: auto !important;
+}
+
+/* Contenedor de tabs */
+[data-slot="tabs"] {
+  position: static !important;
+}
+
+/* Asegurar que el body y html permitan scroll completo */
+html,
+body {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100vh !important;
+}
+
+/* El contenedor principal debe permitir scroll */
+#app-root {
+  overflow-y: auto !important;
+  min-height: 100vh !important;
+}
+
+/* Los TabsContent deben permitir scroll */
+[role="tabpanel"] {
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* ========================================
+   DIÁLOGOS EN MÓVIL - PRODUCCIÓN
+   ======================================== */
+
+@media (max-width: 1023px) {
+  /* Diálogos - estructura flex para header/content/footer */
+  [data-slot="dialog-content"],
+  [data-slot="alert-dialog-content"] {
+    max-height: calc(100vh - 12rem) !important;
+    overflow-y: auto !important;
+    margin-bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Cuerpo del diálogo con scroll interno */
+  [data-slot="dialog-content"] > div:not([data-slot="dialog-header"]):not([data-slot="dialog-footer"]),
+  [data-slot="alert-dialog-content"] > div:not([data-slot="alert-dialog-header"]):not([data-slot="alert-dialog-footer"]) {
+    overflow-y: auto !important;
+    flex: 1 !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Header de diálogos - sticky arriba */
+  [data-slot="dialog-header"],
+  [data-slot="alert-dialog-header"] {
+    flex-shrink: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: hsl(var(--background)) !important;
+    z-index: 10 !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid hsl(var(--border) / 0.3) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Footer de diálogos - SIEMPRE visible y pegado al fondo */
+  [data-slot="dialog-footer"],
+  [data-slot="alert-dialog-footer"] {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: hsl(var(--background)) !important;
+    margin: 0 -1.5rem -1.5rem !important;
+    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0)) !important;
+    border-top: 1px solid hsl(var(--border) / 0.5) !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Overlay de diálogos - no cubrir la barra de navegación */
+  [data-slot="dialog-overlay"],
+  [data-slot="alert-dialog-overlay"] {
+    bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+  }
+
+  /* Sheets (drawers) */
+  [data-slot="sheet-content"] {
+    max-height: calc(100vh - 8rem) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  [data-slot="sheet-footer"] {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: hsl(var(--background)) !important;
+    margin: 0 -1rem -1rem !important;
+    padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0)) !important;
+    border-top: 1px solid hsl(var(--border) / 0.5) !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Barra de navegación móvil - SIEMPRE fija */
+  .mobile-tabs-fixed {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+    will-change: transform !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+  }
+
+  /* Main con padding para la barra de navegación */
+  main {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+  }
+}
+
+/* ========================================
+   TEMA DARK - AJUSTES PARA DIÁLOGOS
+   ======================================== */
+
+.dark [data-slot="dialog-header"],
+.dark [data-slot="alert-dialog-header"],
+.dark [data-slot="dialog-footer"],
+.dark [data-slot="alert-dialog-footer"],
+.dark [data-slot="sheet-footer"] {
+  background: hsl(var(--background)) !important;
+}
+
+.dark [data-slot="dialog-footer"],
+.dark [data-slot="alert-dialog-footer"],
+.dark [data-slot="sheet-footer"] {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+

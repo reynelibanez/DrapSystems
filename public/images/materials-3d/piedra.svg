@@ -1,0 +1,49 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gemGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF1493;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#C71585;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B008B;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="gemShine">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#FF1493;stop-opacity:0" />
+    </radialGradient>
+    <filter id="gemGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Sombra -->
+  <ellipse cx="200" cy="350" rx="100" ry="15" fill="rgba(0,0,0,0.3)"/>
+  
+  <!-- Diamante/Gema -->
+  <g filter="url(#gemGlow)">
+    <!-- Parte superior del diamante -->
+    <polygon points="200,100 280,200 200,180 120,200" fill="url(#gemGradient)" stroke="#8B008B" stroke-width="2"/>
+    
+    <!-- Facetas superiores -->
+    <polygon points="200,100 240,150 200,180" fill="#FF69B4" opacity="0.8"/>
+    <polygon points="200,100 160,150 200,180" fill="#C71585" opacity="0.8"/>
+    
+    <!-- Parte inferior del diamante -->
+    <polygon points="120,200 200,180 200,320" fill="#8B008B" stroke="#4B0082" stroke-width="2"/>
+    <polygon points="280,200 200,180 200,320" fill="#C71585" stroke="#4B0082" stroke-width="2"/>
+    
+    <!-- Facetas inferiores -->
+    <polygon points="200,180 160,240 200,320" fill="#9932CC" opacity="0.6"/>
+    <polygon points="200,180 240,240 200,320" fill="#BA55D3" opacity="0.6"/>
+    
+    <!-- Brillos -->
+    <ellipse cx="200" cy="140" rx="15" ry="8" fill="url(#gemShine)" opacity="0.9"/>
+    <ellipse cx="230" cy="170" rx="10" ry="5" fill="url(#gemShine)" opacity="0.7"/>
+    <ellipse cx="170" cy="170" rx="8" ry="4" fill="url(#gemShine)" opacity="0.6"/>
+    
+    <!-- Reflejos adicionales -->
+    <line x1="200" y1="180" x2="200" y2="280" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
+  </g>
+</svg>

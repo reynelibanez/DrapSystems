@@ -1,0 +1,569 @@
+
+
+
+
+
+
+/**
+* DRAP Appointment - Global Styles
+* Versión: 2.3 - Tema Dark con Grises Oscuros
+* Fecha: 2026-07-09
+* 
+* TEMAS DISPONIBLES:
+* - Light (default): Fondo blanco, texto oscuro
+* - Dark: Fondo gris oscuro (#1a1a1a), texto blanco
+*/
+
+@import "../generated/fonts.css";
+@import "tailwindcss";
+@import "../generated/webflow.css";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --body-font: Inter, sans-serif;
+  --heading-font: Inter, sans-serif;
+  --button-font: Inter, sans-serif;
+  --radius: 0.75rem;
+
+  --background: #FFFFFF;
+  --foreground: #00001F;
+  --card: #FFFFFF;
+  --card-foreground: #00001F;
+  --popover: #FFFFFF;
+  --popover-foreground: #00001F;
+  --primary: #5AC1FF;
+  --primary-foreground: #00001F;
+  --secondary: #F6F7F9;
+  --secondary-foreground: rgba(0, 0, 31, 0.6);
+  --muted: #F6F7F9;
+  --muted-foreground: rgba(0, 0, 31, 0.6);
+  --accent: #F6F7F9;
+  --accent-foreground: rgba(0, 0, 31, 0.6);
+  --destructive: #FF5C5C;
+  --border: rgba(0, 0, 31, 0.1);
+  --input: rgba(0, 0, 31, 0.2);
+  --ring: #5AC1FF;
+  --chart-1: #8FD4FF;
+  --chart-2: #74C9FF;
+  --chart-3: #5AC1FF;
+  --chart-4: #3F9BE0;
+  --chart-5: #2C7BBF;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #00001F;
+  --sidebar-primary: #5AC1FF;
+  --sidebar-primary-foreground: #00001F;
+  --sidebar-accent: #F6F7F9;
+  --sidebar-accent-foreground: rgba(0, 0, 31, 0.6);
+  --sidebar-border: rgba(0, 0, 31, 0.2);
+  --sidebar-ring: #5AC1FF;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: #262626;
+  --card-foreground: #ffffff;
+  --popover: #262626;
+  --popover-foreground: #ffffff;
+  --primary: #5AC1FF;
+  --primary-foreground: #ffffff;
+  --secondary: #333333;
+  --secondary-foreground: rgba(255, 255, 255, 0.7);
+  --muted: #2a2a2a;
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: #333333;
+  --accent-foreground: rgba(255, 255, 255, 0.9);
+  --destructive: #FF5C5C;
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #5AC1FF;
+  --chart-1: #8FD4FF;
+  --chart-2: #74C9FF;
+  --chart-3: #5AC1FF;
+  --chart-4: #3F9BE0;
+  --chart-5: #2C7BBF;
+  --sidebar: #1f1f1f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #5AC1FF;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.7);
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #5AC1FF;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--body-font);
+    min-height: 100vh;
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  p, a, div {
+    font-family: var(--body-font);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+  }
+
+  button {
+    font-family: var(--button-font);
+  }
+}
+
+/* Custom font utility classes */
+.font-heading {
+  font-family: var(--heading-font);
+}
+
+.font-body {
+  font-family: var(--body-font);
+}
+
+.font-button {
+  font-family: var(--button-font);
+}
+
+/* Overrides */
+:is(
+button[role="combobox"],
+button[role="checkbox"],
+button[role="radio"],
+button[data-slot="select-trigger"],
+button[data-slot="button"]:not(:has(> svg):not(:has(> :not(svg))))
+) {
+  border-color: var(--input);
+  border-style: solid;
+  border-width: 1px;
+}
+
+:is(a, button).bg-primary {
+  background-color: var(--primary);
+}
+
+:is(a, button).text-primary-foreground {
+  color: var(--primary-foreground);
+}
+
+:is(a, button).hover\:bg-primary\/90:hover {
+  background-color: var(--primary) !important;
+  opacity: 0.9;
+}
+
+/* FORZAR SCROLL NORMAL EN TABS - SOBRESCRIBIR ESTILOS DE WEBFLOW EN PRODUCCIÓN */
+/* Permitir que el contenedor del tablist sea sticky */
+.sticky[role="tablist"],
+.sticky > [role="tablist"] {
+  position: relative !important;
+}
+
+/* Asegurar que el contenedor de tabs no tenga position fixed */
+.tabs-container,
+[data-slot="tabs"],
+.w-tabs {
+  position: static !important;
+  overflow: visible !important;
+}
+
+/* Clase específica para forzar scroll normal en tabs */
+.tabs-scroll-normal {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* Forzar scroll normal en el body cuando hay tabs */
+body:has([role="tablist"]) {
+  overflow-y: auto !important;
+  position: static !important;
+}
+
+/* Prevenir que elementos de Webflow interfieran con el scroll */
+.w-nav,
+.w-nav-menu,
+.w-dropdown,
+.w-dropdown-list {
+  position: static !important;
+}
+
+/* Asegurar que los TabsContent permitan scroll completo */
+[role="tabpanel"] {
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+}
+
+/* El contenedor del calendario debe permitir scroll */
+.calendar-with-borders {
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Asegurar que el header sticky funcione correctamente */
+header.sticky {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+}
+
+/* Asegurar que el header fixed funcione correctamente */
+header.fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+}
+
+/* Tabs fijos debajo del header */
+.tabs-fixed-header {
+  position: sticky !important;
+  top: 73px !important;
+  z-index: 40 !important;
+  background: hsl(var(--background) / 0.95) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Contenedor sticky de tabs - forzar sticky */
+.tabs-sticky-container {
+  position: sticky !important;
+  top: 73px !important;
+  z-index: 40 !important;
+}
+
+/* El main debe permitir scroll completo */
+main {
+  overflow-y: visible !important;
+  height: auto !important;
+  min-height: calc(100vh - 73px) !important;
+}
+
+/* Asegurar que html y body permitan scroll */
+html, body {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100vh !important;
+}
+
+/* Tabs fijos en móvil - asegurar que estén pegados al fondo */
+@media (max-width: 1023px) {
+  html, body {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Agregar padding al main para que el contenido no quede oculto detrás de la barra de tabs */
+  main {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+  }
+
+  /* Diálogos en móvil - ajustar altura y scroll */
+  [data-slot="dialog-content"] {
+    max-height: calc(100vh - 12rem) !important;
+    overflow-y: auto !important;
+    margin-bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Alert dialogs en móvil - ajustar altura y scroll */
+  [data-slot="alert-dialog-content"] {
+    max-height: calc(100vh - 12rem) !important;
+    overflow-y: auto !important;
+    margin-bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Cuerpo del diálogo con scroll interno */
+  [data-slot="dialog-content"] > div:not([data-slot="dialog-header"]):not([data-slot="dialog-footer"]) {
+    overflow-y: auto !important;
+    flex: 1 !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Cuerpo del alert dialog con scroll interno */
+  [data-slot="alert-dialog-content"] > div:not([data-slot="alert-dialog-header"]):not([data-slot="alert-dialog-footer"]) {
+    overflow-y: auto !important;
+    flex: 1 !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Footer de diálogos - SIEMPRE visible y pegado al fondo del diálogo */
+  [data-slot="dialog-footer"] {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: hsl(var(--background)) !important;
+    margin: 0 -1.5rem -1.5rem !important;
+    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0)) !important;
+    border-top: 1px solid hsl(var(--border) / 0.5) !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Footer de alert dialogs - SIEMPRE visible y pegado al fondo del diálogo */
+  [data-slot="alert-dialog-footer"] {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: hsl(var(--background)) !important;
+    margin: 0 -1.5rem -1.5rem !important;
+    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0)) !important;
+    border-top: 1px solid hsl(var(--border) / 0.5) !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Header de diálogos - no debe hacer scroll */
+  [data-slot="dialog-header"] {
+    flex-shrink: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: hsl(var(--background)) !important;
+    z-index: 10 !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid hsl(var(--border) / 0.3) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Header de alert dialogs - no debe hacer scroll */
+  [data-slot="alert-dialog-header"] {
+    flex-shrink: 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: hsl(var(--background)) !important;
+    z-index: 10 !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid hsl(var(--border) / 0.3) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Sheets (drawers) en móvil - ajustar scroll y padding */
+  [data-slot="sheet-content"] {
+    max-height: calc(100vh - 8rem) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Footer de sheets con padding inferior para evitar que quede oculto */
+  [data-slot="sheet-footer"] {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: hsl(var(--background)) !important;
+    margin: 0 -1rem -1rem !important;
+    padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0)) !important;
+    border-top: 1px solid hsl(var(--border) / 0.5) !important;
+    z-index: 10 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Overlay de diálogos - asegurar que cubra toda la pantalla excepto la barra de navegación */
+  [data-slot="dialog-overlay"],
+  [data-slot="alert-dialog-overlay"] {
+    bottom: calc(4rem + env(safe-area-inset-bottom, 0)) !important;
+  }
+
+  /* Contenedor de tabs fijos - SIEMPRE fijo en la parte inferior */
+  .mobile-tabs-fixed {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: hsl(var(--primary) / 0.5) hsl(var(--muted) / 0.3) !important;
+    /* Asegurar que siempre esté visible y fijo */
+    z-index: 9999 !important;
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+    will-change: transform !important;
+    /* Prevenir que se mueva con el scroll */
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+  }
+
+  .mobile-tabs-fixed::-webkit-scrollbar {
+    height: 6px !important;
+  }
+
+  .mobile-tabs-fixed::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.3) !important;
+    border-radius: 3px !important;
+  }
+
+  .mobile-tabs-fixed::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.5) !important;
+    border-radius: 3px !important;
+  }
+
+  .mobile-tabs-fixed::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.7) !important;
+  }
+
+  /* Scroll horizontal visible para tabs móviles */
+  .mobile-tabs-scroll {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+  }
+
+  /* Cuando los tabs caben en la pantalla, distribuirlos uniformemente */
+  @media (min-width: 640px) {
+    .mobile-tabs-scroll {
+      justify-content: space-evenly !important;
+    }
+  }
+
+  /* Snap scroll para mejor UX */
+  .mobile-tabs-fixed {
+    scroll-snap-type: x proximity !important;
+  }
+
+  .mobile-tabs-scroll > * {
+    scroll-snap-align: start !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* Estilos para scroll vertical de sidebar desktop */
+@media (min-width: 1024px) {
+  /* Contenedor principal de la sidebar con scroll */
+  aside .fixed {
+    scrollbar-width: thin !important;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent !important;
+  }
+
+  aside .fixed::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  aside .fixed::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  aside .fixed::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3) !important;
+    border-radius: 3px !important;
+  }
+
+  aside .fixed::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5) !important;
+  }
+
+  /* Scroll dentro de la tarjeta de tabs */
+  .overflow-y-auto {
+    scrollbar-width: thin !important;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent !important;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3) !important;
+    border-radius: 3px !important;
+  }
+
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5) !important;
+  }
+
+  /* Columnas laterales sticky del Dashboard */
+  aside .sticky {
+    position: sticky !important;
+    top: 5rem !important;
+    z-index: 30 !important;
+  }
+
+  /* Asegurar que el contenedor de tabs permita scroll */
+  .w-full.space-y-4.sm\:space-y-6 {
+    position: relative !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

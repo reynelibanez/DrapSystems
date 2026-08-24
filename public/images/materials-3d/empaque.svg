@@ -1,0 +1,77 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="boxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#A0522D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B3410;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC143C;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#B22222;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
+    </linearGradient>
+    <filter id="boxShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8"/>
+      <feOffset dx="0" dy="10" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Sombra -->
+  <ellipse cx="200" cy="350" rx="120" ry="20" fill="rgba(0,0,0,0.2)"/>
+  
+  <!-- Caja de regalo -->
+  <g filter="url(#boxShadow)">
+    <!-- Cuerpo de la caja - cara frontal -->
+    <rect x="120" y="200" width="160" height="120" fill="url(#boxGradient)" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Cara superior de la caja -->
+    <path d="M 120 200 L 160 170 L 320 170 L 280 200 Z" fill="#A0522D" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Cara lateral derecha -->
+    <path d="M 280 200 L 320 170 L 320 290 L 280 320 Z" fill="#6B3410" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Tapa de la caja - cara frontal -->
+    <rect x="110" y="140" width="180" height="40" fill="#CD853F" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Tapa - cara superior -->
+    <path d="M 110 140 L 150 110 L 330 110 L 290 140 Z" fill="#DEB887" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Tapa - cara lateral -->
+    <path d="M 290 140 L 330 110 L 330 150 L 290 180 Z" fill="#BC8F8F" stroke="#5C3317" stroke-width="2"/>
+    
+    <!-- Cinta horizontal -->
+    <rect x="120" y="220" width="160" height="20" fill="url(#ribbonGradient)" stroke="#8B0000" stroke-width="1"/>
+    <path d="M 280 220 L 320 190 L 320 210 L 280 240 Z" fill="#8B0000" stroke="#660000" stroke-width="1"/>
+    
+    <!-- Cinta vertical -->
+    <rect x="180" y="140" width="40" height="180" fill="url(#ribbonGradient)" stroke="#8B0000" stroke-width="1"/>
+    <path d="M 220 140 L 260 110 L 260 280 L 220 310 Z" fill="#8B0000" stroke="#660000" stroke-width="1"/>
+    
+    <!-- Moño -->
+    <g transform="translate(200, 120)">
+      <!-- Lazo izquierdo -->
+      <path d="M -30 0 Q -50 -20 -40 -40 Q -30 -50 -20 -40 Q -10 -30 -15 -10 Z" 
+            fill="url(#ribbonGradient)" stroke="#8B0000" stroke-width="1"/>
+      <!-- Lazo derecho -->
+      <path d="M 30 0 Q 50 -20 40 -40 Q 30 -50 20 -40 Q 10 -30 15 -10 Z" 
+            fill="url(#ribbonGradient)" stroke="#8B0000" stroke-width="1"/>
+      <!-- Centro del moño -->
+      <circle cx="0" cy="-10" r="12" fill="#DC143C" stroke="#8B0000" stroke-width="2"/>
+      <!-- Cintas colgantes -->
+      <path d="M -8 0 L -15 30 L -10 35 L -5 30 Z" fill="#B22222" stroke="#8B0000" stroke-width="1"/>
+      <path d="M 8 0 L 15 30 L 10 35 L 5 30 Z" fill="#B22222" stroke="#8B0000" stroke-width="1"/>
+    </g>
+    
+    <!-- Detalles de textura en la caja -->
+    <line x1="130" y1="210" x2="270" y2="210" stroke="#5C3317" stroke-width="0.5" opacity="0.3"/>
+    <line x1="130" y1="250" x2="270" y2="250" stroke="#5C3317" stroke-width="0.5" opacity="0.3"/>
+    <line x1="130" y1="290" x2="270" y2="290" stroke="#5C3317" stroke-width="0.5" opacity="0.3"/>
+  </g>
+</svg>

@@ -1,0 +1,157 @@
+
+---
+// Página intermedia que extrae el token y redirige SIN JavaScript
+// Funciona incluso en iframes con sandbox
+
+const url = new URL(Astro.request.url);
+const token = url.searchParams.get('token');
+
+// Si no hay token, redirigir a forgot-password
+if (!token) {
+  return Astro.redirect('/forgot-password');
+}
+
+// Construir URL de destino - usar reset-password-new
+const baseUrl = import.meta.env.PUBLIC_SITE_URL || 'https://www.drapsystems.com/booking-suite';
+const targetUrl = `${baseUrl}/reset-password-new?token=${token}`;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirigiendo...</title>
+  
+  <!-- Estilos inline para evitar bloqueos -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 20px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .link {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    
+    .link:hover {
+      background: #5568d3;
+    }
+    
+    .manual-link {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .manual-link p {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+    
+    .url {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      word-break: break-all;
+      font-size: 12px;
+      color: #666;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spinner"></div>
+    <h1>Redirigiendo...</h1>
+    <p>Serás redirigido automáticamente en unos segundos.</p>
+    
+    <div class="manual-link">
+      <p>Si no eres redirigido automáticamente, haz clic aquí:</p>
+      <a href={targetUrl} class="link" target="_top">
+        Restablecer Contraseña
+      </a>
+      
+      <div style="margin-top: 20px;">
+        <p>O copia este enlace:</p>
+        <div class="url">{targetUrl}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Redirección automática con target="_top" para salir del iframe -->
+  <script>
+    // Intentar salir del iframe y redirigir
+    if (window.top !== window.self) {
+      // Estamos en un iframe, intentar salir
+      window.top.location.href = '{targetUrl}';
+    } else {
+      // No estamos en iframe, redirigir normalmente
+      window.location.href = '{targetUrl}';
+    }
+  </script>
+  
+  <!-- Fallback sin JavaScript usando meta refresh con target -->
+  <noscript>
+    <meta http-equiv="refresh" content="0; url={targetUrl}">
+  </noscript>
+</body>
+</html>
+

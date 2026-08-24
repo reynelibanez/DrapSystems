@@ -1,0 +1,55 @@
+{
+  "name": "DRAP Appointment",
+  "short_name": "DRAP",
+  "description": "Sistema de gestión de citas y clientes",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF9F6",
+  "theme_color": "#A8D5E2",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://cdn.prod.website-files.com/69d6e623f0a48c66f75b1d56/6a3f2c9f041f3c591df3138f_ChatGPT%20Image%20Jun%202%2C%202026%2C%2007_07_01%20PM.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/69d6e623f0a48c66f75b1d56/6a3f2c9f041f3c591df3138f_ChatGPT%20Image%20Jun%202%2C%202026%2C%2007_07_01%20PM.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/69d6e623f0a48c66f75b1d56/6a3f2c9f041f3c591df3138f_ChatGPT%20Image%20Jun%202%2C%202026%2C%2007_07_01%20PM.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/69d6e623f0a48c66f75b1d56/6a3f2c9f041f3c591df3138f_ChatGPT%20Image%20Jun%202%2C%202026%2C%2007_07_01%20PM.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nueva Cita",
+      "short_name": "Nueva Cita",
+      "description": "Crear una nueva cita",
+      "url": "/",
+      "icons": [
+        {
+          "src": "https://cdn.prod.website-files.com/69d6e623f0a48c66f75b1d56/6a3f2c9f041f3c591df3138f_ChatGPT%20Image%20Jun%202%2C%202026%2C%2007_07_01%20PM.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

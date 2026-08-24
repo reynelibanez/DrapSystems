@@ -1,0 +1,197 @@
+
+
+
+
+
+---
+import MainLayout from '../../layouts/main.astro';
+import '../../styles/global.css';
+
+// Importar overrides solo en producción
+if (import.meta.env.PROD) {
+  await import('../../styles/production-overrides.css');
+}
+---
+
+<MainLayout>
+  <div class="min-h-screen flex items-center justify-center bg-background p-4">
+    <div class="max-w-md w-full space-y-8 text-center">
+      <div class="space-y-4">
+        <div class="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+          <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        
+        <h1 class="text-3xl font-bold text-foreground">¡Pago Exitoso!</h1>
+        
+        <p class="text-muted-foreground">
+          Tu suscripción ha sido procesada correctamente.
+        </p>
+        
+        <div class="space-y-2">
+          <div id="status-message" class="text-sm text-muted-foreground">
+            Verificando actualización del plan...
+          </div>
+          <div class="flex justify-center">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  import { getClientBaseUrl } from '../../lib/base-url';
+  
+  console.log('=== SUBSCRIPTION SUCCESS PAGE ===');
+  console.log('Window opener exists:', !!window.opener);
+  console.log('Window origin:', window.location.origin);
+
+  const statusMessage = document.getElementById('status-message');
+  
+  async function checkBusinessUpdate() {
+    try {
+      // Obtener el businessId del sessionStorage
+      const businessId = sessionStorage.getItem('pendingBusinessId');
+      
+      if (!businessId) {
+        console.log('No business ID found, proceeding with reload...');
+        notifyParentAndClose();
+        return;
+      }
+
+      console.log('Checking business update status for:', businessId);
+      if (statusMessage) {
+        statusMessage.textContent = 'Verificando actualización del plan...';
+      }
+
+      // Esperar 3 segundos para dar tiempo al webhook
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      const baseUrl = getClientBaseUrl();
+      
+      // Intentar verificar hasta 5 veces con intervalos de 2 segundos
+      let attempts = 0;
+      const maxAttempts = 5;
+      let planUpdated = false;
+      
+      while (attempts < maxAttempts && !planUpdated) {
+        attempts++;
+        console.log(`Verification attempt ${attempts}/${maxAttempts}`);
+        
+        if (statusMessage) {
+          statusMessage.textContent = `Verificando actualización (${attempts}/${maxAttempts})...`;
+        }
+
+        try {
+          const checkUrl = `${baseUrl}/api/business/check-update?businessId=${businessId}`;
+          console.log('Fetching:', checkUrl);
+          
+          const response = await fetch(checkUrl);
+          console.log('Response status:', response.status);
+          
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Business status:', data);
+            
+            // Verificar si el plan fue actualizado (no es 'basic' y tiene suscripción activa)
+            if (data.hasSubscription && data.status === 'active' && data.plan !== 'basic') {
+              console.log('✅ Plan updated successfully!');
+              planUpdated = true;
+              break;
+            } else {
+              console.log('⏳ Plan not yet updated:', {
+                hasSubscription: data.hasSubscription,
+                status: data.status,
+                plan: data.plan
+              });
+            }
+          } else {
+            const errorText = await response.text();
+            console.error('❌ Error response:', response.status, errorText);
+            
+            // Si es un error 500, intentar parsear el JSON para ver el detalle
+            try {
+              const errorData = JSON.parse(errorText);
+              console.error('Error details:', errorData);
+            } catch (e) {
+              console.error('Could not parse error response');
+            }
+          }
+        } catch (error) {
+          console.error('❌ Error checking status:', error);
+          if (error instanceof Error) {
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+          }
+        }
+
+        if (!planUpdated && attempts < maxAttempts) {
+          console.log('Waiting 2 seconds before next attempt...');
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+      }
+
+      console.log('Verification complete, notifying parent...');
+      if (statusMessage) {
+        statusMessage.textContent = planUpdated 
+          ? '¡Plan actualizado! Cerrando ventana...' 
+          : 'Procesando... Cerrando ventana...';
+      }
+      
+      // Limpiar el sessionStorage
+      sessionStorage.removeItem('pendingBusinessId');
+      
+      notifyParentAndClose();
+    } catch (error) {
+      console.error('❌ Error in checkBusinessUpdate:', error);
+      if (error instanceof Error) {
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+      }
+      notifyParentAndClose();
+    }
+  }
+
+  function notifyParentAndClose() {
+    // Notificar a la ventana principal que la suscripción fue exitosa
+    if (window.opener && !window.opener.closed) {
+      try {
+        console.log('Sending message to parent window...');
+        // Enviar mensaje a la ventana principal
+        window.opener.postMessage({ type: 'subscription-success' }, window.location.origin);
+        
+        console.log('Message sent, reloading parent...');
+        // Recargar inmediatamente
+        window.opener.location.reload();
+      } catch (error) {
+        console.error('Error notifying parent window:', error);
+      }
+    }
+
+    // Intentar cerrar la ventana automáticamente después de 2 segundos
+    setTimeout(() => {
+      console.log('Attempting to close window...');
+      // Si la ventana fue abierta por JavaScript, se puede cerrar
+      if (window.opener) {
+        window.close();
+      } else {
+        // Si no, redirigir al dashboard
+        console.log('Cannot close window, redirecting to dashboard...');
+        const baseUrl = getClientBaseUrl();
+        window.location.href = baseUrl || '/';
+      }
+    }, 2000);
+  }
+
+  // Iniciar verificación
+  checkBusinessUpdate();
+</script>
+
+
+
+
+
+

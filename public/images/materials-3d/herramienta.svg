@@ -1,0 +1,85 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="toolGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#708090;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#556B7D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3D4F5C;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="handleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A2511;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="toolShine">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#708090;stop-opacity:0" />
+    </radialGradient>
+    <filter id="toolShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+      <feOffset dx="0" dy="8" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Sombra -->
+  <ellipse cx="200" cy="350" rx="130" ry="20" fill="rgba(0,0,0,0.2)"/>
+  
+  <!-- Alicates de joyería -->
+  <g filter="url(#toolShadow)">
+    <!-- Mango izquierdo -->
+    <path d="M 100 280 L 120 260 L 140 270 L 120 290 Z" fill="url(#handleGradient)" stroke="#4A2511" stroke-width="2"/>
+    <rect x="100" y="260" width="40" height="30" rx="5" fill="#8B4513" stroke="#4A2511" stroke-width="2"/>
+    
+    <!-- Mango derecho -->
+    <path d="M 300 280 L 280 260 L 260 270 L 280 290 Z" fill="url(#handleGradient)" stroke="#4A2511" stroke-width="2"/>
+    <rect x="260" y="260" width="40" height="30" rx="5" fill="#8B4513" stroke="#4A2511" stroke-width="2"/>
+    
+    <!-- Articulación central -->
+    <circle cx="200" cy="200" r="20" fill="url(#toolGradient)" stroke="#3D4F5C" stroke-width="3"/>
+    <circle cx="200" cy="200" r="8" fill="#2F3E4A" stroke="#1C2833" stroke-width="2"/>
+    
+    <!-- Brazo izquierdo -->
+    <path d="M 120 270 L 180 210 L 200 200 L 190 220 Z" fill="url(#toolGradient)" stroke="#3D4F5C" stroke-width="2"/>
+    
+    <!-- Brazo derecho -->
+    <path d="M 280 270 L 220 210 L 200 200 L 210 220 Z" fill="url(#toolGradient)" stroke="#3D4F5C" stroke-width="2"/>
+    
+    <!-- Punta izquierda (pinza) -->
+    <path d="M 180 210 L 200 200 L 200 120 L 190 110 L 180 120 Z" fill="#556B7D" stroke="#3D4F5C" stroke-width="2"/>
+    
+    <!-- Punta derecha (pinza) -->
+    <path d="M 220 210 L 200 200 L 200 120 L 210 110 L 220 120 Z" fill="#556B7D" stroke="#3D4F5C" stroke-width="2"/>
+    
+    <!-- Dientes de la pinza izquierda -->
+    <path d="M 185 130 L 190 130 L 190 125 L 185 125 Z" fill="#3D4F5C"/>
+    <path d="M 185 145 L 190 145 L 190 140 L 185 140 Z" fill="#3D4F5C"/>
+    <path d="M 185 160 L 190 160 L 190 155 L 185 155 Z" fill="#3D4F5C"/>
+    
+    <!-- Dientes de la pinza derecha -->
+    <path d="M 210 130 L 215 130 L 215 125 L 210 125 Z" fill="#3D4F5C"/>
+    <path d="M 210 145 L 215 145 L 215 140 L 210 140 Z" fill="#3D4F5C"/>
+    <path d="M 210 160 L 215 160 L 215 155 L 210 155 Z" fill="#3D4F5C"/>
+    
+    <!-- Brillos metálicos -->
+    <ellipse cx="190" cy="180" rx="15" ry="8" fill="url(#toolShine)" opacity="0.6"/>
+    <ellipse cx="210" cy="180" rx="15" ry="8" fill="url(#toolShine)" opacity="0.6"/>
+    <ellipse cx="200" cy="200" rx="10" ry="10" fill="url(#toolShine)" opacity="0.5"/>
+    
+    <!-- Detalles de textura en mangos -->
+    <line x1="105" y1="265" x2="135" y2="265" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="105" y1="270" x2="135" y2="270" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="105" y1="275" x2="135" y2="275" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="105" y1="280" x2="135" y2="280" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    
+    <line x1="265" y1="265" x2="295" y2="265" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="265" y1="270" x2="295" y2="270" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="265" y1="275" x2="295" y2="275" stroke="#654321" stroke-width="1" opacity="0.5"/>
+    <line x1="265" y1="280" x2="295" y2="280" stroke="#654321" stroke-width="1" opacity="0.5"/>
+  </g>
+</svg>

@@ -1,0 +1,642 @@
+
+
+
+
+
+{
+
+
+  "name": "astro",
+
+
+  "type": "module",
+
+
+  "engines": {
+    "node": ">=22.0.0"
+  },
+
+
+  "version": "0.0.1",
+
+
+  "scripts": {
+
+
+    "predev": "npx kill-port 3000 || true",
+
+
+    "dev": "astro dev",
+
+
+    "build": "astro build && node scripts/copy-sw.js",
+
+
+    "preview": "astro build && wrangler dev",
+
+
+    "astro": "astro",
+
+
+    "cf-typegen": "wrangler types",
+
+
+    "check-env": "node scripts/check-env.js",
+
+
+    "check-email": "node scripts/check-email-config.js",
+
+
+    "check-stripe": "node scripts/check-stripe-prices.js",
+
+
+    "check-service-key": "node scripts/check-service-key.js",
+
+
+    "check-database": "node scripts/check-database-schema.js",
+
+
+    "generate-key": "node scripts/generate-encryption-key.js",
+
+
+    "setup": "npm run generate-key && npm run check-env",
+
+
+    "test-update": "node scripts/test-update-business.js",
+
+
+    "verify-env": "node scripts/verify-env.js",
+
+
+    "test-check-update": "node scripts/test-check-update.js",
+
+
+    "diagnose-webhook": "node scripts/diagnose-webhook.js",
+
+
+    "diagnose-billing": "node scripts/diagnose-billing-issue.js",
+
+
+    "verify-plan-visibility": "node scripts/verify-plan-visibility.js",
+
+
+    "check-webhook-logs": "node scripts/check-stripe-webhook-logs.js",
+
+
+    "test-email-notifications": "node scripts/test-email-notifications.js",
+
+
+    "test-appointment-email": "node scripts/test-appointment-email.js",
+
+
+    "test-appointment-confirmation": "node scripts/test-appointment-confirmation.js",
+
+
+    "test-resend": "node scripts/test-resend-simple.js",
+
+
+    "test-endpoint-dev": "node scripts/test-endpoint-dev.js",
+
+
+    "test-reminders": "node scripts/test-reminders-function.js",
+
+
+    "verify-reminders-setup": "node scripts/verify-reminders-setup.js",
+
+
+    "test-backup": "node scripts/test-backup.js",
+
+
+    "test-backup-full": "node scripts/test-backup-full.js",
+
+
+    "test-user-update": "node scripts/test-user-update.js",
+
+
+    "check-cloudflare": "node scripts/check-cloudflare-secrets.js",
+
+
+    "check-supabase-functions": "node scripts/check-supabase-functions.js",
+
+
+    "create-backup": "node scripts/create-site-backup.js",
+
+
+    "deploy": "npm run build && npx wrangler deploy",
+
+
+    "logs": "npx wrangler tail",
+
+
+    "cf-secrets": "npx wrangler secret list",
+
+
+    "cf-secret-put": "npx wrangler secret put",
+
+
+    "cf-secret-delete": "npx wrangler secret delete",
+
+
+    "generate-booking-link": "node scripts/generate-test-booking-link.js",
+
+
+    "test-encryption": "node scripts/test-encryption.js",
+
+
+    "test-twilio": "node scripts/test-twilio.js",
+
+
+    "manage-twilio": "node scripts/manage-twilio-numbers.js",
+
+
+    "twilio-list": "node scripts/manage-twilio-numbers.js list",
+
+
+    "twilio-stats": "node scripts/manage-twilio-numbers.js stats",
+
+
+    "twilio-reset": "node scripts/manage-twilio-numbers.js reset",
+
+
+    "test-twilio-numbers": "node scripts/test-twilio-numbers.js",
+
+
+    "test-reset-counters": "node scripts/test-reset-counters.js",
+
+
+    "index-docs": "node scripts/index-documentation.js",
+
+
+    "seed-ai-responses": "node scripts/seed-ai-responses.js",
+
+
+    "test-client-password": "node scripts/test-client-password.js",
+
+
+    "test-bcrypt": "node scripts/test-bcrypt-password.js",
+
+
+    "check-client-login": "node scripts/check-client-login.js",
+
+
+    "verify-chat-system": "node scripts/verify-chat-system.js",
+
+
+    "verify-chat-improvements": "node scripts/verificar-mejoras-chat.js",
+
+
+    "verify-pwa": "node scripts/verify-pwa-setup.js",
+
+
+    "verify-css": "node scripts/verify-production-css.js",
+
+
+    "push": "node scripts/push-to-github.js",
+
+
+    "seed-appointments": "node scripts/seed-appointments.js",
+
+
+    "deploy-production": "node scripts/deploy-to-production-repo.js",
+
+
+    "deploy-production-branch": "node scripts/deploy-production-branch.js",
+
+
+    "push-with-dist": "node scripts/push-with-dist.js",
+
+
+    "check-subscription-dates": "node scripts/test-subscription-dates.js",
+
+
+    "fix-subscription-dates": "node scripts/fix-subscription-dates.js",
+
+
+    "verify-plan-limits": "node scripts/verify-plan-limits.js",
+
+
+    "verify-email-config": "node scripts/verify-email-config.js",
+
+
+    "test-email-send": "node scripts/test-email-send.js",
+
+
+    "test-password-reset": "node scripts/test-password-reset.js",
+
+
+    "backup": "node scripts/create-backup.js",
+
+
+    "send-test-sms": "node scripts/send-test-sms.js",
+
+
+    "send-sms-direct": "node scripts/send-sms-direct.js",
+
+
+    "test-appointment-sms": "node scripts/test-appointment-sms.js",
+
+
+    "diagnose-stripe-ids": "node scripts/diagnose-stripe-customer-ids.js",
+
+
+    "fix-stripe-ids": "node scripts/fix-stripe-customer-ids.js",
+
+
+    "diagnose-subscription": "node scripts/diagnose-subscription-update.js",
+
+
+    "sync-subscriptions": "node scripts/sync-stripe-subscriptions.js",
+
+
+    "deploy-webhook": "./scripts/deploy-stripe-webhook-function.sh",
+
+
+    "verify-webhook": "node scripts/verify-webhook-config.js",
+
+
+    "verify-billing": "node scripts/verify-billing-detection.js",
+
+
+    "verify-deploy": "node scripts/verify-ready-for-deploy.js",
+
+
+    "verify-fix": "node scripts/verify-booking-fix.js",
+
+
+    "test-endpoints": "node scripts/compare-endpoints.js",
+
+
+    "test-temporary-password": "node scripts/test-temporary-password.js",
+
+
+    "test-appointment-email-now": "node scripts/test-appointment-email-now.js",
+
+
+    "verify-resend": "node scripts/verify-resend-config.js",
+
+
+    "diagnose-sms": "node scripts/diagnose-sms-503.js",
+
+
+    "diagnose-email": "node scripts/diagnose-email-endpoint.js",
+
+
+    "diagnose-notifications": "node scripts/diagnose-sms-notifications.js",
+
+
+    "diagnose-stripe-customer": "node scripts/diagnose-stripe-customer.js",
+
+
+    "test-notification-insert": "node scripts/test-notification-insert.js",
+
+
+    "check-sms-history": "node scripts/check-sms-history.js",
+
+
+    "check-all-sms": "node scripts/check-all-sms.js",
+
+
+    "test-sms-billing": "node scripts/test-sms-billing.js",
+
+
+    "setup-sms-billing": "node scripts/setup-sms-billing.js",
+
+
+    "test-sms-webhook-supabase": "node scripts/test-sms-webhook-supabase.js",
+
+
+    "test-partial-payment": "node scripts/test-partial-payment.js",
+
+
+    "test-webhook-unified": "node scripts/test-webhook-unified.js",
+
+
+    "setup-module-subscriptions": "node scripts/setup-module-subscriptions.js",
+
+
+    "test-module-registration": "node scripts/test-module-registration.js",
+
+
+    "test-services-subscription": "node scripts/test-services-subscription.js",
+
+
+    "diagnose-module-subscriptions": "node scripts/diagnose-module-subscriptions.js",
+
+
+    "test-services-limits": "node scripts/test-services-limits.js",
+
+
+    "test-client-language": "node scripts/test-client-language.js",
+
+
+    "diagnose-notifications-issue": "node scripts/diagnose-notifications-issue.js",
+
+
+    "fix-notifications-403": "node scripts/fix-notifications-403.js",
+
+
+    "test-language-update": "node scripts/test-language-update.js",
+
+
+    "verify-client-types": "npx tsc --noEmit src/components/business/ClientForm.tsx",
+
+
+    "test-appointment-language": "node scripts/test-appointment-language.js",
+
+
+    "verify-services-config": "node scripts/verify-services-config.js",
+
+
+    "test-business-email": "node scripts/test-business-email-notification.js",
+
+
+    "test-sms-plan-validation": "node scripts/test-sms-plan-validation.js",
+
+
+    "test-monthly-availability": "node scripts/test-monthly-availability.js",
+
+
+    "test-service-staff": "node scripts/test-service-staff-association.js",
+
+
+    "test-jewelry": "node scripts/test-jewelry-module.js",
+
+
+    "test-jewelry-integration": "node scripts/test-jewelry-module-integration.js",
+
+
+    "test-currency": "node scripts/test-currency-system.js",
+
+
+    "fix-currency-rls": "node scripts/fix-currency-rls.js",
+
+
+    "test-currency-change": "node scripts/test-currency-change.js",
+
+
+    "create-jewelry-bucket": "node scripts/create-jewelry-bucket.js",
+
+
+    "apply-jewelry-policies": "node scripts/apply-jewelry-bucket-policies.js",
+
+
+    "test-production-stock": "node scripts/test-production-stock-deduction.js",
+    "test-jewelry-stats": "node scripts/test-jewelry-stats.js",
+    "test-precio-por-peso": "node scripts/test-precio-por-peso.js",
+    "setup-jewelry-units": "node scripts/setup-jewelry-units.js",
+    "add-insumo-category": "node scripts/add-insumo-category.js",
+    "fix-vista-existencias": "node scripts/fix-vista-existencias.js",
+    "check-existencias-all": "node scripts/check-existencias-all.js"
+
+
+  },
+
+
+  "dependencies": {
+
+
+    "@astrojs/cloudflare": "12.6.7",
+
+
+    "@astrojs/react": "4.3.0",
+
+
+    "@hookform/resolvers": "5.2.1",
+
+
+    "@radix-ui/react-accordion": "1.2.11",
+
+
+    "@radix-ui/react-alert-dialog": "1.1.14",
+
+
+    "@radix-ui/react-aspect-ratio": "1.1.7",
+
+
+    "@radix-ui/react-avatar": "1.1.10",
+
+
+    "@radix-ui/react-checkbox": "1.3.2",
+
+
+    "@radix-ui/react-collapsible": "1.1.11",
+
+
+    "@radix-ui/react-context-menu": "2.2.15",
+
+
+    "@radix-ui/react-dialog": "1.1.14",
+
+
+    "@radix-ui/react-dropdown-menu": "2.1.15",
+
+
+    "@radix-ui/react-hover-card": "1.1.14",
+
+
+    "@radix-ui/react-label": "2.1.7",
+
+
+    "@radix-ui/react-menubar": "1.1.15",
+
+
+    "@radix-ui/react-navigation-menu": "1.2.13",
+
+
+    "@radix-ui/react-popover": "1.1.14",
+
+
+    "@radix-ui/react-progress": "1.1.7",
+
+
+    "@radix-ui/react-radio-group": "1.3.7",
+
+
+    "@radix-ui/react-scroll-area": "1.2.9",
+
+
+    "@radix-ui/react-select": "2.2.5",
+
+
+    "@radix-ui/react-separator": "1.1.7",
+
+
+    "@radix-ui/react-slider": "1.3.5",
+
+
+    "@radix-ui/react-slot": "1.2.3",
+
+
+    "@radix-ui/react-switch": "1.2.5",
+
+
+    "@radix-ui/react-tabs": "1.1.12",
+
+
+    "@radix-ui/react-toggle": "1.1.9",
+
+
+    "@radix-ui/react-toggle-group": "1.1.10",
+
+
+    "@radix-ui/react-tooltip": "1.2.7",
+
+
+    "@react-three/drei": "10.7.8",
+
+
+    "@react-three/fiber": "9.7.0",
+
+
+    "@stripe/stripe-js": "9.8.0",
+
+
+    "@supabase/supabase-js": "2.108.2",
+
+
+    "@tailwindcss/vite": "4.1.11",
+
+
+    "@types/archiver": "8.0.0",
+
+
+    "@types/react": "19.1.9",
+
+
+    "@types/react-dom": "19.1.7",
+
+
+    "archiver": "8.0.0",
+
+
+    "astro": "5.13.5",
+
+
+    "bcryptjs": "3.0.3",
+
+
+    "class-variance-authority": "0.7.1",
+
+
+    "clsx": "2.1.1",
+
+
+    "cmdk": "1.1.1",
+
+
+    "date-fns": "4.1.0",
+
+
+    "dotenv": "17.4.2",
+
+
+    "embla-carousel-react": "8.6.0",
+
+
+    "i18next": "26.3.2",
+
+
+    "input-otp": "1.4.2",
+
+
+    "lucide-react": "0.533.0",
+
+
+    "next-themes": "0.4.6",
+
+
+    "pg": "8.22.0",
+
+
+    "react": "19.1.1",
+
+
+    "react-day-picker": "9.8.1",
+
+
+    "react-dom": "19.1.1",
+
+
+    "react-hook-form": "7.61.1",
+
+
+    "react-i18next": "17.0.8",
+
+
+    "react-resizable-panels": "3.0.3",
+
+
+    "recharts": "2.15.4",
+
+
+    "resend": "6.14.0",
+
+
+    "sonner": "2.0.6",
+
+
+    "stripe": "22.2.2",
+
+
+    "tailwind-merge": "3.3.1",
+
+
+    "tailwindcss": "4.1.11",
+
+
+    "three": "0.185.1",
+
+
+    "twilio": "6.0.2",
+
+
+    "vaul": "1.1.2",
+
+
+    "webflow-api": "3.2.0",
+
+
+    "zod": "4.0.13"
+
+
+  },
+
+
+  "devDependencies": {
+
+
+    "@astrojs/check": "0.9.4",
+
+
+    "@cloudflare/workers-types": "4.20250726.0",
+
+
+    "@types/bcryptjs": "2.4.6",
+
+
+    "kill-port": "2.0.1",
+
+
+    "tw-animate-css": "1.3.6",
+
+
+    "wrangler": "4.26.1"
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

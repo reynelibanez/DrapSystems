@@ -1,0 +1,24 @@
+{
+    "cloud": {
+        "framework": "astro",
+        "project_id": "7a8a2c33-87f4-4b96-9784-f84033c9cc90",
+        "contract_version": "1",
+        "deployment_type": "ssr",
+        "entrypoint_path": "./index.js",
+        "skip_no_bundle": false,
+        "framework_version": "5.13.5"
+    },
+    "devlink": {
+        "rootDir": "./src/site-components",
+        "cssModules": true,
+        "fileExtensions": {
+            "js": "jsx"
+        }
+    },
+    "telemetry": {
+        "global": {
+            "allowTelemetry": true
+        }
+    },
+    "siteId": "69d6e623f0a48c66f75b1d56"
+}

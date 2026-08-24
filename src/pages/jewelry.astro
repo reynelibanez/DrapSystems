@@ -1,0 +1,15 @@
+---
+import MainLayout from '../layouts/main.astro';
+import { JewelryApp } from '../components/jewelry/JewelryApp';
+import '../styles/global.css';
+
+const pageClass = 'jewelry-app';
+---
+
+<MainLayout pageClass={pageClass}>
+  <div id="jewelry-root">
+    <JewelryApp client:only="react" />
+  </div>
+</MainLayout>
+
+

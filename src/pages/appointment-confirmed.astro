@@ -1,0 +1,337 @@
+
+
+---
+import MainLayout from '../layouts/main.astro';
+import '../styles/global.css';
+import { createClient } from '@supabase/supabase-js';
+import { sendEmail, generateBusinessAppointmentNotificationEmail } from '../lib/email-service';
+import { decryptAppointmentId } from '../lib/encryption';
+
+const pageClass = 'appointment-confirmed';
+
+// Obtener parámetros de la URL
+const url = new URL(Astro.request.url);
+const encryptedId = url.searchParams.get('id');
+
+console.log('📧 Appointment confirmation page loaded:');
+console.log('  - Full URL:', Astro.request.url);
+console.log('  - Encrypted ID:', encryptedId ? `${encryptedId.substring(0, 20)}...` : 'MISSING');
+
+let state: 'loading' | 'success' | 'already-confirmed' | 'error' = 'loading';
+let errorMessage = '';
+let appointmentDetails: any = null;
+
+// Procesar la confirmación en el servidor
+if (!encryptedId) {
+  state = 'error';
+  errorMessage = 'Invalid confirmation link';
+} else {
+  try {
+    // Desencriptar el ID de la cita
+    const appointmentId = decryptAppointmentId(encryptedId);
+    
+    if (!appointmentId) {
+      console.error('❌ Failed to decrypt appointment ID');
+      console.error('   Encrypted ID:', encryptedId);
+      state = 'error';
+      errorMessage = 'Invalid confirmation link';
+    } else {
+      console.log('✅ Decrypted appointment ID:', appointmentId);
+      console.log('   Full decrypted ID:', appointmentId);
+      console.log('   ID length:', appointmentId.length);
+      console.log('   ID format check:', /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(appointmentId));
+      
+      // Obtener credenciales de Supabase
+      const supabaseUrl = Astro.locals?.runtime?.env?.PUBLIC_SUPABASE_URL || import.meta.env.PUBLIC_SUPABASE_URL;
+      const supabaseServiceKey = Astro.locals?.runtime?.env?.SUPABASE_SERVICE_ROLE_KEY || import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+      console.log('🔑 Supabase credentials check:', {
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseServiceKey,
+        urlPrefix: supabaseUrl?.substring(0, 30) + '...'
+      });
+
+      if (!supabaseUrl || !supabaseServiceKey) {
+        console.error('❌ Supabase credentials not configured');
+        state = 'error';
+        errorMessage = 'Server configuration error';
+      } else {
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+        console.log('🔍 Searching for appointment with ID:', appointmentId);
+
+        // Buscar la cita primero
+        const { data: appointment, error: fetchError } = await supabase
+          .from('appointments')
+          .select('*')
+          .eq('id', appointmentId)
+          .single();
+
+        console.log('📊 Query result:', {
+          hasData: !!appointment,
+          hasError: !!fetchError,
+          errorMessage: fetchError?.message,
+          errorCode: fetchError?.code,
+          errorDetails: fetchError?.details
+        });
+
+        if (fetchError || !appointment) {
+          console.error('❌ Error fetching appointment:', fetchError);
+          console.error('   Searched ID:', appointmentId);
+          state = 'error';
+          errorMessage = 'Appointment not found';
+        } else {
+          console.log('✅ Appointment found:', appointment.id);
+          
+          // Buscar información del cliente
+          let clientInfo = null;
+          if (appointment.client_id) {
+            const { data: client } = await supabase
+              .from('clients')
+              .select('name, email, phone, preferred_language')
+              .eq('id', appointment.client_id)
+              .single();
+            clientInfo = client;
+          }
+
+          // Buscar información del servicio
+          let serviceInfo = null;
+          if (appointment.service_id) {
+            const { data: service } = await supabase
+              .from('services')
+              .select('name')
+              .eq('id', appointment.service_id)
+              .single();
+            serviceInfo = service;
+          }
+
+          // Buscar información del negocio
+          let businessInfo = null;
+          if (appointment.business_id) {
+            const { data: business } = await supabase
+              .from('businesses')
+              .select('name, email, address')
+              .eq('id', appointment.business_id)
+              .single();
+            businessInfo = business;
+          }
+
+          // Verificar si la cita ya está confirmada
+          if (appointment.status === 'confirmed') {
+            console.log('ℹ️ Appointment already confirmed');
+            state = 'already-confirmed';
+            appointmentDetails = {
+              clientName: clientInfo?.name,
+              serviceName: serviceInfo?.name,
+              startTime: appointment.start_time
+            };
+          } else {
+            // Actualizar el estado de la cita a "confirmed"
+            const { error: updateError } = await supabase
+              .from('appointments')
+              .update({ 
+                status: 'confirmed',
+                updated_at: new Date().toISOString()
+              })
+              .eq('id', appointmentId);
+
+            if (updateError) {
+              console.error('❌ Error updating appointment:', updateError);
+              state = 'error';
+              errorMessage = 'Failed to confirm appointment';
+            } else {
+              console.log('✅ Appointment confirmed:', appointmentId);
+              state = 'success';
+              appointmentDetails = {
+                clientName: clientInfo?.name,
+                serviceName: serviceInfo?.name,
+                startTime: appointment.start_time
+              };
+
+              // Enviar email al negocio
+              if (businessInfo?.email) {
+                try {
+                  const resendApiKey = Astro.locals?.runtime?.env?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+                  const resendFromEmail = Astro.locals?.runtime?.env?.RESEND_FROM_EMAIL || import.meta.env.RESEND_FROM_EMAIL;
+                  const siteUrl = Astro.locals?.runtime?.env?.PUBLIC_SITE_URL || import.meta.env.PUBLIC_SITE_URL;
+
+                  const startDate = new Date(appointment.start_time);
+                  const day = String(startDate.getDate()).padStart(2, '0');
+                  const month = String(startDate.getMonth() + 1).padStart(2, '0');
+                  const year = startDate.getFullYear();
+                  const appointmentDate = `${day}/${month}/${year}`;
+
+                  const emailHtml = generateBusinessAppointmentNotificationEmail({
+                    clientName: clientInfo?.name || 'Unknown',
+                    clientEmail: clientInfo?.email,
+                    clientPhone: clientInfo?.phone,
+                    serviceName: serviceInfo?.name || 'Unknown',
+                    date: appointmentDate,
+                    time: startDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+                    notes: appointment.notes,
+                    businessName: businessInfo?.name || 'Business',
+                    businessAddress: businessInfo?.address,
+                    siteUrl
+                  });
+
+                  await sendEmail(
+                    {
+                      to: businessInfo.email,
+                      subject: `✅ Appointment Confirmed - ${clientInfo?.name || 'Client'}`,
+                      html: emailHtml
+                    },
+                    resendApiKey,
+                    resendFromEmail
+                  );
+
+                  console.log('✅ Business notification email sent');
+                } catch (emailError) {
+                  console.error('❌ Error sending business email:', emailError);
+                  // No fallar la confirmación si el email falla
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error confirming appointment:', error);
+    state = 'error';
+    errorMessage = 'Internal server error';
+  }
+}
+
+// Formatear la fecha y hora para mostrar
+const formatDateTime = (isoString: string) => {
+  try {
+    const date = new Date(isoString);
+    return {
+      date: date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      }),
+      time: date.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      })
+    };
+  } catch {
+    return { date: isoString, time: '' };
+  }
+};
+
+---
+
+<MainLayout pageClass={pageClass}>
+  <div id="app-root">
+    <div id="confirmation-container" class="min-h-screen flex items-center justify-center p-4">
+      <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center">
+        
+        {state === 'success' && (
+          <div id="success-state">
+            <div class="mb-6">
+              <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">¡Cita Confirmada!</h2>
+              <p class="text-gray-600 dark:text-gray-400">Tu cita ha sido confirmada exitosamente.</p>
+            </div>
+            
+            {appointmentDetails && (
+              <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6 text-left">
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Cliente:</span>
+                    <span>{appointmentDetails.clientName}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Servicio:</span>
+                    <span>{appointmentDetails.serviceName}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Fecha:</span>
+                    <span>{formatDateTime(appointmentDetails.startTime).date}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Hora:</span>
+                    <span>{formatDateTime(appointmentDetails.startTime).time}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Recibirás un email de confirmación en breve.
+            </p>
+          </div>
+        )}
+
+        {state === 'already-confirmed' && (
+          <div id="already-confirmed-state">
+            <div class="mb-6">
+              <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">Ya Confirmada</h2>
+              <p class="text-gray-600 dark:text-gray-400">Esta cita ya fue confirmada anteriormente.</p>
+            </div>
+
+            {appointmentDetails && (
+              <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6 text-left">
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Cliente:</span>
+                    <span>{appointmentDetails.clientName}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Servicio:</span>
+                    <span>{appointmentDetails.serviceName}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Fecha:</span>
+                    <span>{formatDateTime(appointmentDetails.startTime).date}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Hora:</span>
+                    <span>{formatDateTime(appointmentDetails.startTime).time}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {state === 'error' && (
+          <div id="error-state">
+            <div class="mb-6">
+              <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">Error de Confirmación</h2>
+              <p class="text-gray-600 dark:text-gray-400">{errorMessage || 'No se pudo confirmar la cita. Por favor intenta de nuevo o contacta a soporte.'}</p>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  #confirmation-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+</style>
+
+

@@ -1,0 +1,3 @@
+# Este archivo es un placeholder
+# Necesitas reemplazarlo con un icono PNG real de 192x192
+# Por ahora vamos a usar un SVG convertido

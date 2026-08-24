@@ -1,0 +1,49 @@
+---
+const { pageClass = '' } = Astro.props;
+---
+
+<html lang="en" class={pageClass}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>DRAP Appointment</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Forzar que el HTML y el Body ocupen el 100% real de la pantalla */
+  html, 
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-height: 100vh !important;
+    overflow-x: hidden;
+  }
+
+  /* Asegurar que el contenedor de la App de React no se encoja */
+  #app-root {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-height: 100vh !important;
+  }
+
+  /* Page-specific overrides */
+  html.splash main { 
+    display: flex !important; 
+  }
+
+  html.splash ol,
+  html.splash ul { 
+    padding-left: 0 !important; 
+    margin: 0 !important; 
+  }
+</style>
+
+
